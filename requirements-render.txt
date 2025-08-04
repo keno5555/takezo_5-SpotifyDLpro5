@@ -1,0 +1,11 @@
+# MusicFlow Bot Dependencies - Python 3.13 Compatible
+# This file is specifically for Render deployment
+python-telegram-bot[all]==21.6
+spotipy==2.25.1
+yt-dlp==2025.7.21
+flask==3.1.1
+requests==2.32.4
+aiohttp==3.12.15
+pillow>=11.3.0
+redis==6.2.0
+click==8.2.1

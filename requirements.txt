@@ -1,0 +1,7 @@
+python-telegram-bot[all]==21.6
+spotipy==2.25.1
+flask==3.1.1
+gunicorn==21.2.0
+pillow>=11.3.0
+yt-dlp==2025.7.21
+requests==2.32.4

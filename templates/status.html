@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MusicFlow Bot - Status</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .bot-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .status-card {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #4CAF50;
+            margin-right: 10px;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.3; }
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 15px 0;
+            font-size: 1.1em;
+        }
+
+        .feature-icon {
+            margin-right: 10px;
+            font-size: 1.3em;
+        }
+
+        .telegram-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #0088cc, #00a1e6);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 136, 204, 0.3);
+        }
+
+        .telegram-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 136, 204, 0.4);
+        }
+
+        .uptime {
+            font-size: 0.9em;
+            opacity: 0.8;
+            margin-top: 20px;
+        }
+
+        .music-notes {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 30px;
+            opacity: 0.3;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .music-notes:nth-child(2) {
+            top: 60px;
+            right: 30px;
+            left: auto;
+            animation-delay: 1s;
+        }
+
+        .music-notes:nth-child(3) {
+            bottom: 40px;
+            left: 50px;
+            top: auto;
+            animation-delay: 2s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="music-notes">♪</div>
+    <div class="music-notes">♫</div>
+    <div class="music-notes">♪</div>
+
+    <div class="container">
+        <div class="bot-icon">🎵</div>
+        <h1>MusicFlow Bot</h1>
+        <p class="subtitle">Your Personal Music Download Assistant</p>
+        
+        <div class="status-card">
+            <div class="feature">
+                <span class="status-indicator"></span>
+                <strong>Bot Status: Online & Ready</strong>
+            </div>
+            <div class="uptime" id="uptime">Uptime: Loading...</div>
+        </div>
+
+        <div class="feature">
+            <span class="feature-icon">🎶</span>
+            Download individual tracks instantly
+        </div>
+        <div class="feature">
+            <span class="feature-icon">🎧</span>
+            Process entire playlists effortlessly
+        </div>
+        <div class="feature">
+            <span class="feature-icon">💎</span>
+            Multiple quality options (128-320kbps)
+        </div>
+        <div class="feature">
+            <span class="feature-icon">⚡</span>
+            Lightning-fast processing
+        </div>
+        <div class="feature">
+            <span class="feature-icon">🌍</span>
+            24/7 availability on Render
+        </div>
+
+        <a href="https://t.me/YOUR_BOT_USERNAME" class="telegram-btn" id="telegram-link">
+            📱 Start Using Bot
+        </a>
+        
+        <div class="uptime">
+            <small>Powered by Render • Built with ❤️</small>
+        </div>
+    </div>
+
+    <script>
+        // Update bot status and uptime
+        function updateStatus() {
+            fetch('/api/status')
+                .then(response => response.json())
+                .then(data => {
+                    const uptimeHours = Math.floor(data.uptime / 3600);
+                    const uptimeMinutes = Math.floor((data.uptime % 3600) / 60);
+                    document.getElementById('uptime').textContent = 
+                        `Uptime: ${uptimeHours}h ${uptimeMinutes}m`;
+                })
+                .catch(error => {
+                    document.getElementById('uptime').textContent = 'Uptime: Calculating...';
+                });
+        }
+
+        // Update status every 10 seconds
+        updateStatus();
+        setInterval(updateStatus, 10000);
+
+        // Get bot username from URL or use placeholder
+        const botUsername = window.location.hostname.split('.')[0] || 'YOUR_BOT_USERNAME';
+        document.getElementById('telegram-link').href = `https://t.me/${botUsername}_bot`;
+    </script>
+</body>
+</html>
